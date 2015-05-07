@@ -1,5 +1,6 @@
 package com.screen;
 
+import com.Menu.StageMenu;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -30,7 +31,7 @@ public class AbstractScreen implements Screen, InputProcessor {
             batch;
 
     // escena
-    protected final Stage stage;
+    protected StageMenu stageMenu;
 
     /**
      * Constructor
@@ -42,7 +43,7 @@ public class AbstractScreen implements Screen, InputProcessor {
         this.joc= joc;
         this.batch = new SpriteBatch();
         // definim l'stage amb un viewport de mida 0x0px i que mantingui la relaci? d'aspecte
-        this.stage = new Stage(); //0, 0, true);
+        this.stageMenu = new StageMenu(joc); //0, 0, true);
         Gdx.input.setInputProcessor(this);
     }
 
@@ -54,7 +55,7 @@ public class AbstractScreen implements Screen, InputProcessor {
         // (1) processar la l?gica del joc
 
         // actualitzar els actors
-        stage.act(delta);
+        stageMenu.act(delta);
 
         // (2) dibuixar el resultat
         // Pinta la pantalla amb color negre
@@ -62,7 +63,7 @@ public class AbstractScreen implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // dibuixar els actors.
-        stage.draw();
+        stageMenu.draw();
     }
 
     /**
@@ -121,7 +122,7 @@ public class AbstractScreen implements Screen, InputProcessor {
     public void dispose() {
         Gdx.app.log(HeroesNightfall.class.getSimpleName(), "Alliberant recursos de la pantalla: " + getName());
 
-        stage.dispose();
+        stageMenu.dispose();
         batch.dispose();
     }
 

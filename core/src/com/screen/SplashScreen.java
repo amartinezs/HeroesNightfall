@@ -57,7 +57,7 @@ public class SplashScreen extends AbstractScreen {
                 }));
 
         // finalment afegim l'actor a l'stage
-        stage.addActor(splashImage);
+        stageMenu.addActor(splashImage);
 
     }
 
