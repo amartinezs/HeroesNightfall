@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.game.HeroesNightfall.GameResourses;
 import com.game.HeroesNightfall.GameStage;
 import com.game.HeroesNightfall.HeroesNightfall;
 import com.uwsoft.editor.renderer.resources.ResourceManager;
@@ -37,8 +38,15 @@ public class MainMenuScreen extends AbstractScreen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stageMenu.act();
-        stageMenu.draw();
+
+        if(GameResourses.gameMode == 0){
+            stageMenu.act();
+            stageMenu.draw();
+        } else if(GameResourses.gameMode == 1){
+            //((Game)Gdx.app.getApplicationListener()).setScreen(new MainScreen(getGame()));
+        }
+
+
     }
 
     @Override
