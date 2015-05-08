@@ -7,7 +7,7 @@ public interface GameResourses {
 
     public static final float PIXELS_PER_METRE = 90.0f;
     public static final String titol = "Heroes Nightfall";
-    public static int gameMode = 0;
+
 
 
 

@@ -2,6 +2,7 @@ package com.Menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
+import com.game.HeroesNightfall.HeroesNightfall;
 import com.uwsoft.editor.renderer.actor.CompositeItem;
 
 /**
@@ -31,6 +32,7 @@ public class SonOfTheMenuTest extends MenuMotherScript {
             eventButton.getButtonScript().act(delta);
             if(eventButton.getButtonScript().isDown()){
                 Gdx.app.log("Touch a la ","ovella");
+                HeroesNightfall.gameMode = 1;
             }
         }
     }

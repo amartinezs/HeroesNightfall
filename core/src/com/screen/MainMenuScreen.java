@@ -20,7 +20,7 @@ import com.uwsoft.editor.renderer.resources.ResourceManager;
  */
 public class MainMenuScreen extends AbstractScreen {
 
-
+    private HeroesNightfall game;
     /**
      * Constructor
      *
@@ -28,6 +28,7 @@ public class MainMenuScreen extends AbstractScreen {
      */
     public MainMenuScreen(HeroesNightfall joc) {
         super(joc);
+        this.game = joc;
         stageMenu.clear();
         stageMenu.loadThatScene("MainScene");
         //ResourceManager rm = new ResourceManager();
@@ -39,11 +40,12 @@ public class MainMenuScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if(GameResourses.gameMode == 0){
+        if(HeroesNightfall.gameMode == 0){
             stageMenu.act();
             stageMenu.draw();
-        } else if(GameResourses.gameMode == 1){
-            //((Game)Gdx.app.getApplicationListener()).setScreen(new MainScreen(getGame()));
+        } else if(HeroesNightfall.gameMode == 1){
+            //stageMenu.clear();
+            ((Game)Gdx.app.getApplicationListener()).setScreen(new GameScreen(game));
         }
 
 
