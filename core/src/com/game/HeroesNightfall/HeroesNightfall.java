@@ -14,8 +14,8 @@ public class HeroesNightfall extends Game {
 	public static final int WIDTH = 600;
 	public static final int HEIGHT = 320;
 	public static int gameMode = 0;
-	private int screenWidth;
-	private int screenHeight;
+	private int screenWidth = WIDTH;
+	private int screenHeight = HEIGHT;
 
 	/**
 	 * Constructor per defecte

@@ -129,7 +129,10 @@ public class TiledMapHelper {
 	 * @param screenHeight
 	 */
 	public void prepareCamera(int screenWidth, int screenHeight) {
-		camera = new OrthographicCamera(screenWidth, screenHeight);
+		camera = new OrthographicCamera(100, 100 * (screenHeight / screenWidth));
+		//camera.setToOrtho(false, 600 / getMapWidth(), 320 / getMapHeight());
+		camera.zoom += 5.5;
+		camera.position.set(camera.viewportWidth /2f, camera.viewportHeight /2f,0);
 	}
 	/**
 	 * Returns the camera object created for viewing the loaded map.
