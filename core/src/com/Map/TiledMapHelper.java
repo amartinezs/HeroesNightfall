@@ -42,6 +42,7 @@ import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.game.HeroesNightfall.GameResourses;
 
 
 public class TiledMapHelper {
@@ -129,7 +130,7 @@ public class TiledMapHelper {
 	 * @param screenHeight
 	 */
 	public void prepareCamera(int screenWidth, int screenHeight) {
-		camera = new OrthographicCamera(100, 100 * (screenHeight / screenWidth));
+		camera = new OrthographicCamera(GameResourses.MAP_UNITS, GameResourses.MAP_UNITS * (screenHeight / screenWidth));
 		//camera.setToOrtho(false, 600 / getMapWidth(), 320 / getMapHeight());
 		camera.zoom += 5.5;
 		camera.position.set(camera.viewportWidth /2f, camera.viewportHeight /2f,0);
