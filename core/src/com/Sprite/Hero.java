@@ -28,7 +28,7 @@ public class Hero {
     private boolean moureDreta;
     private boolean ferSalt;
     private boolean personatgeCaraDreta;
-    private float yVelocity;
+    private float yPosition = 0;
 
     private World world;                // Referència al mon on està definit el personatge
     private Body cos;                   // per definir les propietats del cos
@@ -47,6 +47,7 @@ public class Hero {
         //carregarSons();
         crearProtagonista(positionX, positionY, tag);
         setAlive(true);
+        spriteAnimat.setLeft(false);
     }
 
 
@@ -109,8 +110,8 @@ public class Hero {
         setMoureDreta(false);
         setMoureEsquerra(false);
         setFerSalt(false);
-        setCaraDreta(true);
-        if(spriteAnimat.getDirection() != AnimatorWalk.Direction.JUMP){
+
+        if(spriteAnimat.getDirection() != AnimatorWalk.Direction.JUMP && getSpriteAnimat().getDirection() != AnimatorWalk.Direction.FALLING){
             getSpriteAnimat().setDirection(AnimatorWalk.Direction.STOPPED);
         }
 
@@ -147,21 +148,24 @@ public class Hero {
         if (moureDreta) {
             getCos().applyLinearImpulse(new Vector2(0.2f, 0.0f),
                     getCos().getWorldCenter(), true);
-            if(getSpriteAnimat().getDirection() != AnimatorWalk.Direction.JUMP){
+            if(getSpriteAnimat().getDirection() != AnimatorWalk.Direction.JUMP && getSpriteAnimat().getDirection() != AnimatorWalk.Direction.FALLING){
                 getSpriteAnimat().setDirection(AnimatorWalk.Direction.RIGHT);
             }
-            if (!isPersonatgeCaraDreta()) {
-                getSpritePersonatge().flip(true, false);
+            if (spriteAnimat.isLeft()) {
+                spriteAnimat.setLeft(false);
+                Gdx.app.log("Mira dreta","");
             }
             setPersonatgeCaraDreta(true);
         } else if (moureEsquerra) {
             getCos().applyLinearImpulse(new Vector2(-0.2f, 0.0f),
                     getCos().getWorldCenter(), true);
-            if(getSpriteAnimat().getDirection() != AnimatorWalk.Direction.JUMP){
+            if(getSpriteAnimat().getDirection() != AnimatorWalk.Direction.JUMP && getSpriteAnimat().getDirection() != AnimatorWalk.Direction.FALLING){
                 getSpriteAnimat().setDirection(AnimatorWalk.Direction.LEFT);
             }
-            if (isPersonatgeCaraDreta()) {
-                getSpritePersonatge().flip(true, false);
+            if (!spriteAnimat.isLeft()) {
+                //getSpritePersonatge().flip(true, false);
+                spriteAnimat.setLeft(true);
+                Gdx.app.log("Mira esquerra", "");
             }
             setPersonatgeCaraDreta(false);
         }
@@ -173,11 +177,11 @@ public class Hero {
             getSpriteAnimat().setDirection(AnimatorWalk.Direction.JUMP);
         }
 
-        if(yVelocity > getCos().getLinearVelocity().y){
+        if(yPosition > getPositionBody().y){
             getSpriteAnimat().setDirection(AnimatorWalk.Direction.FALLING);
         }
 
-        yVelocity = getCos().getLinearVelocity().y;
+        yPosition = getPositionBody().y;
     }
 
 
