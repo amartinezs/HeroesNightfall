@@ -3,6 +3,7 @@ package com.screen;
 import com.Map.GestorContactes;
 import com.Map.MapBodyManager;
 import com.Map.TiledMapHelper;
+import com.Sprite.Hero;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
@@ -27,6 +29,8 @@ public class GameScreen extends AbstractScreen {
     private World world;
     MapBodyManager mapBodyManager;
     float rotationSpeed = 0.5f;
+    Box2DDebugRenderer box2DRenderer;
+
 
     //Gestor de colisions y llista de cosos a destruir
     GestorContactes gestorContactes;
@@ -36,9 +40,8 @@ public class GameScreen extends AbstractScreen {
     private Music music; // TODO No implementat trobar musica
 
     // TODO Afegir declaracions dels Sprites
+    private Hero hero;
 
-    //private Texture splashTexture;
-    //private Image splashImage;
 
     /** Retorna una instancia de World amb una forsa de
      * gravetat indicada per parametres.
@@ -88,73 +91,47 @@ public class GameScreen extends AbstractScreen {
         mapHelper.getCamera().position.x = 100*3.5f;
         mapHelper.getCamera().position.y = 100*3.5f;
 
-        // Assegurar que la camera nomes mostra el mapa i res mes
-        //Gdx.app.log("ScreenWidth",String.valueOf(joc.getScreenWidth()));
-         /* if (mapHelper.getCamera().position.x < joc.getScreenWidth() / 2) {
-                mapHelper.getCamera().position.x = joc.getScreenWidth()/ 2;
-            }
-            if (mapHelper.getCamera().position.x >= mapHelper.getWidth()
-                    -  joc.getScreenWidth()/ 2) {
-                mapHelper.getCamera().position.x = mapHelper.getWidth()
-                        - joc.getScreenWidth()/ 2;
-            }
-
-            if (mapHelper.getCamera().position.y < joc.getScreenHeight() / 2) {
-                mapHelper.getCamera().position.y = joc.getScreenHeight()/ 2;
-            }
-            if (mapHelper.getCamera().position.y >= mapHelper.getHeight()
-                    - joc.getScreenHeight() / 2) {
-                mapHelper.getCamera().position.y = mapHelper.getHeight()
-                        - joc.getScreenHeight() / 2;
-            }
-
-        if (mapHelper.getCamera().position.x < 600){
-            mapHelper.getCamera().position.x = 600;
-        }
-
-        if (mapHelper.getCamera().position.x > 6686){
-            mapHelper.getCamera().position.x = 6686;
-        }*/
-
-        // actualitzar els nous valors de la càmera
         mapHelper.getCamera().update();
 
     }
 
     private void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            mapHelper.getCamera().zoom += 0.02;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            mapHelper.getCamera().zoom -= 0.02;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            mapHelper.getCamera().translate(-3, 0, 0);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            mapHelper.getCamera().translate(3, 0, 0);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            mapHelper.getCamera().translate(0, -3, 0);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            mapHelper.getCamera().translate(0, 3, 0);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            mapHelper.getCamera().rotate(-rotationSpeed, 0, 0, 1);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.E)) {
-            mapHelper.getCamera().rotate(rotationSpeed, 0, 0, 1);
+
+        if (Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)) {
+            hero.setMoureDreta(true);
+
+        } else {
+            for (int i = 0; i < 2; i++) {
+                if (Gdx.input.isTouched(i)
+                        && Gdx.input.getX() > Gdx.graphics.getWidth() * 0.80f) {
+                    hero.setMoureDreta(true);
+                }
+            }
         }
 
-        mapHelper.getCamera().update();
-       /* mapHelper.getCamera().zoom = MathUtils.clamp(mapHelper.getCamera().zoom, 0.1f, 100 / mapHelper.getCamera().viewportWidth);
+        if (Gdx.input.isKeyPressed(Input.Keys.DPAD_LEFT)) {
+            hero.setMoureEsquerra(true);
 
-        float effectiveViewportWidth = mapHelper.getCamera().viewportWidth * mapHelper.getCamera().zoom;
-        float effectiveViewportHeight = mapHelper.getCamera().viewportHeight * mapHelper.getCamera().zoom;
+        } else {
+            for (int i = 0; i < 2; i++) {
+                if (Gdx.input.isTouched(i)
+                        && Gdx.input.getX() < Gdx.graphics.getWidth() * 0.20f) {
+                    hero.setMoureEsquerra(true);
+                }
+            }
+        }
 
-        mapHelper.getCamera().position.x = MathUtils.clamp(mapHelper.getCamera().position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
-        mapHelper.getCamera().position.y = MathUtils.clamp(mapHelper.getCamera().position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);*/
+        if (Gdx.input.isKeyPressed(Input.Keys.DPAD_UP)) {
+            hero.setFerSalt(true);
+        } else {
+            for (int i = 0; i < 2; i++) {
+                if (Gdx.input.isTouched(i)
+                        && Gdx.input.getY() < Gdx.graphics.getHeight() * 0.20f) {
+                    hero.setFerSalt(true);
+                }
+            }
+        }
+
     }
 
 
@@ -170,39 +147,41 @@ public class GameScreen extends AbstractScreen {
         initMap();
         makePhysics();
         enableColissions();
-        // carregar la imatge
-        /*splashTexture = new Texture(
-                Gdx.files.internal("win.png"));
-        // seleccionar Linear per millorar l'estirament
-        splashTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-
-        splashImage = new Image(splashTexture);
-        splashImage.setFillParent(true);
-
-        stageMenu.addActor(splashImage);*/
+        box2DRenderer = new Box2DDebugRenderer();
+        hero = new Hero(world, "sprites/noBlankMario.png", "sprites/stopmario.png", 3, 3, "mario");
 
     }
 
     @Override
     public void render(float delta){
 
-        world.step(Gdx.app.getGraphics().getDeltaTime(), 6, 2);
 
+        hero.inicialitzarMoviments();
+        handleInput();
+        hero.moure();
+        hero.updatePosition();
+
+
+        world.step(Gdx.app.getGraphics().getDeltaTime(), 6, 2);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
+
         moureCamera();
-        handleInput();
+
         mapHelper.render();
+
+
         batch.setProjectionMatrix(mapHelper.getCamera().combined);
 
         batch.begin();
-
+            hero.dibuixar(batch);
         batch.end();
 
-
-
-        /*stageMenu.act(delta);
-        stageMenu.draw();*/
+        box2DRenderer.render(world, mapHelper.getCamera().combined.scale(
+                GameResourses.PIXELS_PER_METRE, GameResourses.PIXELS_PER_METRE,
+                GameResourses.PIXELS_PER_METRE));
 
     }
 
