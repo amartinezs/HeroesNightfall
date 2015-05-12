@@ -77,7 +77,7 @@ public class GameScreen extends AbstractScreen {
      * I li envia al gestor de contactes */
     private void enableColissions(){
         bodyDestroyList = new Array<Body>();
-        gestorContactes = new GestorContactes(bodyDestroyList);
+        gestorContactes = new GestorContactes(bodyDestroyList,hero);
         world.setContactListener(gestorContactes);
     }
     /**
@@ -86,10 +86,11 @@ public class GameScreen extends AbstractScreen {
     private void moureCamera() {
 
         // Posicionem la camera centran-la on hi hagi l'sprite del protagonista
-       /*mapHelper.getCamera().position.x = GameResourses.PIXELS_PER_METRE
-                * 3+400;*/
-        mapHelper.getCamera().position.x = 100*3.5f;
-        mapHelper.getCamera().position.y = 100*3.5f;
+       mapHelper.getCamera().position.x = GameResourses.PIXELS_PER_METRE
+                * hero.getPositionBody().x;
+        mapHelper.getCamera().position.y = GameResourses.PIXELS_PER_METRE * hero.getPositionBody().y;
+           /*mapHelper.getCamera().position.x = 100*3.5f;
+        mapHelper.getCamera().position.y = 100*3.5f;*/
 
         mapHelper.getCamera().update();
 
@@ -142,13 +143,16 @@ public class GameScreen extends AbstractScreen {
      */
     public GameScreen(HeroesNightfall joc) {
         super(joc);
-
         world = initWorld(0,-9.8f);
+
         initMap();
         makePhysics();
+
+        hero = new Hero(world, "sprites/noBlankMario.png", "sprites/stopmario.png", 3, 3, "mario");
+
         enableColissions();
         box2DRenderer = new Box2DDebugRenderer();
-        hero = new Hero(world, "sprites/noBlankMario.png", "sprites/stopmario.png", 3, 3, "mario");
+
 
     }
 
@@ -178,7 +182,7 @@ public class GameScreen extends AbstractScreen {
         batch.begin();
             hero.dibuixar(batch);
         batch.end();
-
+        Gdx.app.log(String.valueOf(hero.getCos().getPosition().y),"har");
         box2DRenderer.render(world, mapHelper.getCamera().combined.scale(
                 GameResourses.PIXELS_PER_METRE, GameResourses.PIXELS_PER_METRE,
                 GameResourses.PIXELS_PER_METRE));

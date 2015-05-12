@@ -28,6 +28,7 @@ public class Hero {
     private boolean moureDreta;
     private boolean ferSalt;
     private boolean personatgeCaraDreta;
+    private float yVelocity;
 
     private World world;                // Referència al mon on està definit el personatge
     private Body cos;                   // per definir les propietats del cos
@@ -105,10 +106,15 @@ public class Hero {
     }
 
     public void inicialitzarMoviments() {
-        setMoureDreta(true);
+        setMoureDreta(false);
         setMoureEsquerra(false);
         setFerSalt(false);
-        getSpriteAnimat().setDirection(AnimatorWalk.Direction.STOPPED);
+        setCaraDreta(true);
+        if(spriteAnimat.getDirection() != AnimatorWalk.Direction.JUMP){
+            getSpriteAnimat().setDirection(AnimatorWalk.Direction.STOPPED);
+        }
+
+
     }
 
     /**
@@ -138,14 +144,12 @@ public class Hero {
      * Els impulsos s'apliquen des del centre del protagonista
      */
     public void moure() {
-        getSpriteAnimat().setDirection(AnimatorWalk.Direction.RIGHT);
-        float xVelocity=getCos().getLinearVelocity().x;
-        float yVelocity=getCos().getLinearVelocity().y;
-        /*if (moureDreta) {
+        if (moureDreta) {
             getCos().applyLinearImpulse(new Vector2(0.2f, 0.0f),
                     getCos().getWorldCenter(), true);
-            getSpriteAnimat().setDirection(AnimatorWalk.Direction.RIGHT);
-
+            if(getSpriteAnimat().getDirection() != AnimatorWalk.Direction.JUMP){
+                getSpriteAnimat().setDirection(AnimatorWalk.Direction.RIGHT);
+            }
             if (!isPersonatgeCaraDreta()) {
                 getSpritePersonatge().flip(true, false);
             }
@@ -153,18 +157,27 @@ public class Hero {
         } else if (moureEsquerra) {
             getCos().applyLinearImpulse(new Vector2(-0.2f, 0.0f),
                     getCos().getWorldCenter(), true);
-            getSpriteAnimat().setDirection(AnimatorWalk.Direction.LEFT);
+            if(getSpriteAnimat().getDirection() != AnimatorWalk.Direction.JUMP){
+                getSpriteAnimat().setDirection(AnimatorWalk.Direction.LEFT);
+            }
             if (isPersonatgeCaraDreta()) {
                 getSpritePersonatge().flip(true, false);
             }
             setPersonatgeCaraDreta(false);
-        }*/
+        }
 
         if (ferSalt && Math.abs(getCos().getLinearVelocity().y) < 1e-9) {
             getCos().applyLinearImpulse(new Vector2(0.0f, 6.0f),
                     getCos().getWorldCenter(), true);
             //long id = soSalt.play();
+            getSpriteAnimat().setDirection(AnimatorWalk.Direction.JUMP);
         }
+
+        if(yVelocity > getCos().getLinearVelocity().y){
+            getSpriteAnimat().setDirection(AnimatorWalk.Direction.FALLING);
+        }
+
+        yVelocity = getCos().getLinearVelocity().y;
     }
 
 

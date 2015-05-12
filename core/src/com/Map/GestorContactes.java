@@ -1,5 +1,7 @@
 package com.Map;
 
+import com.Sprite.AnimatorWalk;
+import com.Sprite.Hero;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -20,10 +22,12 @@ import java.util.ArrayList;
 public class GestorContactes implements ContactListener {
 
     private Array<Body> bodyDestroyList;
+    private Hero hero;
     private World world;
 
-    public GestorContactes(Array<Body> bodyDestroyList) {
+    public GestorContactes(Array<Body> bodyDestroyList, Hero hero) {
         this.bodyDestroyList = bodyDestroyList;
+        this.hero = hero;
     }
 
     @Override
@@ -37,6 +41,11 @@ public class GestorContactes implements ContactListener {
         if (fixtureA.getBody().getUserData() == null
                 || fixtureB.getBody().getUserData() == null) {
             return;
+        }
+
+        if(fixtureA.getBody().getUserData().equals("mario") || fixtureB.getBody().getUserData().toString().equals("mario")){
+            hero.getSpriteAnimat().setDirection(AnimatorWalk.Direction.STOPPED);
+            Gdx.app.log("beginContact","para ostia");
         }
     }
 
