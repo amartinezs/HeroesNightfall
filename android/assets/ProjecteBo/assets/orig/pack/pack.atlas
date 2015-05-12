@@ -1,0 +1,90 @@
+
+pack.png
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+button
+  rotate: false
+  xy: 1206, 169
+  size: 17, 17
+  orig: 17, 17
+  offset: 0, 0
+  index: -1
+button (1)
+  rotate: false
+  xy: 1955, 406
+  size: 52, 52
+  orig: 52, 52
+  offset: 0, 0
+  index: -1
+button (3)
+  rotate: false
+  xy: 2, 2
+  size: 52, 52
+  orig: 52, 52
+  offset: 0, 0
+  index: -1
+button (4)
+  rotate: false
+  xy: 154, 84
+  size: 52, 52
+  orig: 52, 52
+  offset: 0, 0
+  index: -1
+button (5)
+  rotate: false
+  xy: 1955, 352
+  size: 52, 52
+  orig: 52, 52
+  offset: 0, 0
+  index: -1
+button (6)
+  rotate: false
+  xy: 56, 2
+  size: 52, 52
+  orig: 52, 52
+  offset: 0, 0
+  index: -1
+fire
+  rotate: false
+  xy: 1688, 206
+  size: 265, 252
+  orig: 265, 252
+  offset: 0, 0
+  index: -1
+gamegrumpsorangebackgroundbyepicguitar-d685ixv
+  rotate: false
+  xy: 1206, 188
+  size: 480, 270
+  orig: 480, 270
+  offset: 0, 0
+  index: -1
+no
+  rotate: false
+  xy: 2, 138
+  size: 600, 320
+  orig: 600, 320
+  offset: 0, 0
+  index: -1
+not bad2
+  rotate: false
+  xy: 2, 138
+  size: 600, 320
+  orig: 600, 320
+  offset: 0, 0
+  index: -1
+not bad3
+  rotate: false
+  xy: 2, 56
+  size: 150, 80
+  orig: 150, 80
+  offset: 0, 0
+  index: -1
+not bad4
+  rotate: false
+  xy: 604, 138
+  size: 600, 320
+  orig: 600, 320
+  offset: 0, 0
+  index: -1
