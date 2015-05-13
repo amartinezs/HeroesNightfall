@@ -18,7 +18,7 @@ public class SonOfTheMenuTest extends MenuMotherScript {
     public void init(CompositeItem item) {
         super.init(item);
         gameButtonArray = new Array<GameButton>();
-        gameButtonArray.add(new GameButton("sheep", menu));
+        gameButtonArray.add(new GameButton("playButton", menu));
     }
 
     @Override
