@@ -3,15 +3,6 @@
  <tileset firstgid="1" name="tilea4" tilewidth="32" tileheight="32" margin="20">
   <image source="tilea4.png" width="512" height="480"/>
  </tileset>
- <imagelayer name="SecondbackgroundImageLayer" x="2749" y="-289">
-  <image source="forcemocha-caves2-1920x1200.jpg"/>
- </imagelayer>
- <imagelayer name="ThirdbackgroundImageLayer" x="5244" y="-288">
-  <image source="red-giant-sunset.jpg"/>
- </imagelayer>
- <imagelayer name="FirstbackgroundImageLayer" x="-15" y="-288">
-  <image source="Cloudy-sky.jpg"/>
- </imagelayer>
  <layer name="Tile Layer 1" width="223" height="15">
   <data encoding="base64" compression="zlib">
    eJztmcFqwzAMhv2iO+/Scy5lL7CXqHfrqd0LjDHoeeyR1oADQiiO5NiRbPTBDyF1Y9X1F6U0BKc292c+QRweMfi6Oftw98qIwdfN2Ye7V0YMvm7WeE3pBXevjBjGX7cXkF5w98YnPvMBMiInEKvgXteTezGMv4dacAfH+J41yj1s7ndvKb3Qm3sLo+yZI8i5NwpW3cv9rtNwbwKREMHxqHuoBXvcaz2+Flbdy+F9b3yO6Hva3wd078tIcr1lUqinlKVPfh+Ua4qU1nXVqKMlPwZyQ7mArJ3HyV3jAs7dNt5D+Tcx5sdzbM2Dx1KhkDyD/h6YHJSX2jVxa6kJ7Hd/RkLtuy23JOG+f5kL7utJMA81H/Yde0p9xuWYy5qPWu7l+uBZqaaZRwqm1D3OsyM1Rts37N5WT5H2QU7fWxuHkc7DqXFtDDy/Fy33KM4p74Zq4qxT7f9ItV1r4R7e83hc7nV8PYzEvdwzKK6H6ncwe7Hi3uzc0gut1MRdp9pou8Z55tzyI9djJNejgim9Due3n6QOKVb2+TW4ezPanlH5B27SFwc=

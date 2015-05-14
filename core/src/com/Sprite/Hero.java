@@ -107,7 +107,7 @@ public class Hero {
     }
 
     public void inicialitzarMoviments() {
-        setMoureDreta(false);
+        setMoureDreta(true);
         setMoureEsquerra(false);
         setFerSalt(false);
 
@@ -145,7 +145,7 @@ public class Hero {
      * Els impulsos s'apliquen des del centre del protagonista
      */
     public void moure() {
-        if (moureDreta) {
+        if (moureDreta && getCos().getLinearVelocity().x < 5) {
             getCos().applyLinearImpulse(new Vector2(0.2f, 0.0f),
                     getCos().getWorldCenter(), true);
             if(getSpriteAnimat().getDirection() != AnimatorWalk.Direction.JUMP && getSpriteAnimat().getDirection() != AnimatorWalk.Direction.FALLING){

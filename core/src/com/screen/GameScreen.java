@@ -4,11 +4,14 @@ import com.Map.GestorContactes;
 import com.Map.MapBodyManager;
 import com.Map.TiledMapHelper;
 import com.Sprite.Hero;
+import com.Sprite.ParallaxBackground;
+import com.Sprite.ParallaxLayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -41,7 +44,11 @@ public class GameScreen extends AbstractScreen {
 
     // TODO Afegir declaracions dels Sprites
     private Hero hero;
+    private Texture test;
 
+    private void loadBackground(){
+        test = new Texture("levels/Zone1/Cloudy-sky.jpg");
+    }
 
     /** Retorna una instancia de World amb una forsa de
      * gravetat indicada per parametres.
@@ -152,13 +159,12 @@ public class GameScreen extends AbstractScreen {
 
         enableColissions();
         box2DRenderer = new Box2DDebugRenderer();
-
+        loadBackground();
 
     }
 
     @Override
     public void render(float delta){
-
 
         hero.inicialitzarMoviments();
         handleInput();
@@ -170,18 +176,26 @@ public class GameScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
-
         moureCamera();
-
-        mapHelper.render();
-
 
         batch.setProjectionMatrix(mapHelper.getCamera().combined);
 
+        ParallaxBackground rgb = new ParallaxBackground(new ParallaxLayer[]{
+                new ParallaxLayer(new TextureRegion(test,600,320),new Vector2(),new Vector2(0, 0)),
+                new ParallaxLayer(new TextureRegion(test,600,320),new Vector2(1.0f,1.0f),new Vector2(0, 500)),
+                new ParallaxLayer(new TextureRegion(test,650,320),new Vector2(0.1f,0),new Vector2(0,HeroesNightfall.HEIGHT-200),new Vector2(0, 0)),
+        }, 800, 480,new Vector2(150,0));
+        rgb.render(delta);
+
         batch.begin();
-            hero.dibuixar(batch);
+            //batch.draw(test, 0, 0);
+        hero.dibuixar(batch);
         batch.end();
+
+
+
+        mapHelper.render();
+
         Gdx.app.log(String.valueOf(hero.getCos().getPosition().y),"har");
         box2DRenderer.render(world, mapHelper.getCamera().combined.scale(
                 GameResourses.PIXELS_PER_METRE, GameResourses.PIXELS_PER_METRE,
