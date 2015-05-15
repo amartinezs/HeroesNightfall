@@ -18,7 +18,7 @@ import com.game.HeroesNightfall.GameResourses;
  */
 public class Hero {
 
-    private final int FRAME_ROWS = 4;
+    private final int FRAME_ROWS = 2;
     private final int FRAME_COLS = 8;
 
     /**
@@ -47,7 +47,6 @@ public class Hero {
         //carregarSons();
         crearProtagonista(positionX, positionY, tag);
         setAlive(true);
-        spriteAnimat.setLeft(false);
     }
 
 
@@ -71,7 +70,7 @@ public class Hero {
 
     private void crearProtagonista(float position1, float position2, String tag) {
         setSpritePersonatge(new Sprite(getAnimatedTexture()));
-        setSpriteAnimat(new AnimatorWalk(getSpritePersonatge(), FRAME_COLS, FRAME_ROWS, getStoppedTexture(), GameResourses.FPS));
+        setSpriteAnimat(new AnimatorWalk(getSpritePersonatge(), FRAME_COLS, FRAME_ROWS, getStoppedTexture()));
 
         // Definir el tipus de cos i la seva posició
         BodyDef defCos = new BodyDef();
@@ -111,9 +110,10 @@ public class Hero {
         setMoureEsquerra(false);
         setFerSalt(false);
 
-        if(spriteAnimat.getDirection() != AnimatorWalk.Direction.JUMP && getSpriteAnimat().getDirection() != AnimatorWalk.Direction.FALLING){
+        if(getCos().getLinearVelocity().x == 0){
             getSpriteAnimat().setDirection(AnimatorWalk.Direction.STOPPED);
         }
+
 
 
     }
@@ -145,28 +145,16 @@ public class Hero {
      * Els impulsos s'apliquen des del centre del protagonista
      */
     public void moure() {
-        if (moureDreta && getCos().getLinearVelocity().x < 5) {
+
+        if (moureDreta && getCos().getLinearVelocity().x < 3) {
             getCos().applyLinearImpulse(new Vector2(0.2f, 0.0f),
                     getCos().getWorldCenter(), true);
-            if(getSpriteAnimat().getDirection() != AnimatorWalk.Direction.JUMP && getSpriteAnimat().getDirection() != AnimatorWalk.Direction.FALLING){
                 getSpriteAnimat().setDirection(AnimatorWalk.Direction.RIGHT);
-            }
-            if (spriteAnimat.isLeft()) {
-                spriteAnimat.setLeft(false);
-                Gdx.app.log("Mira dreta","");
-            }
+
             setPersonatgeCaraDreta(true);
         } else if (moureEsquerra) {
             getCos().applyLinearImpulse(new Vector2(-0.2f, 0.0f),
                     getCos().getWorldCenter(), true);
-            if(getSpriteAnimat().getDirection() != AnimatorWalk.Direction.JUMP && getSpriteAnimat().getDirection() != AnimatorWalk.Direction.FALLING){
-                getSpriteAnimat().setDirection(AnimatorWalk.Direction.LEFT);
-            }
-            if (!spriteAnimat.isLeft()) {
-                //getSpritePersonatge().flip(true, false);
-                spriteAnimat.setLeft(true);
-                Gdx.app.log("Mira esquerra", "");
-            }
             setPersonatgeCaraDreta(false);
         }
 
@@ -174,12 +162,11 @@ public class Hero {
             getCos().applyLinearImpulse(new Vector2(0.0f, 6.0f),
                     getCos().getWorldCenter(), true);
             //long id = soSalt.play();
-            getSpriteAnimat().setDirection(AnimatorWalk.Direction.JUMP);
         }
 
-        if(yPosition > getPositionBody().y){
+        /*if(yPosition > getPositionBody().y){
             getSpriteAnimat().setDirection(AnimatorWalk.Direction.FALLING);
-        }
+        }*/
 
         yPosition = getPositionBody().y;
     }
@@ -235,7 +222,7 @@ public class Hero {
     public void dispose() {
         getAnimatedTexture().dispose();
         getStoppedTexture().dispose();
-        soSalt.dispose();
+//        soSalt.dispose();
     }
     public boolean isPersonatgeCaraDreta() {
         return personatgeCaraDreta;

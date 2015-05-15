@@ -8,7 +8,7 @@ public interface GameResourses {
     float PIXELS_PER_METRE = 90.0f;
     String titol = "Heroes Nightfall";
     float MAP_UNITS = 100;
-    float FPS = 0.30f;
+    float FPS = 0.60f;
 
 
 

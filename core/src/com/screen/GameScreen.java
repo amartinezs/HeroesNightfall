@@ -4,28 +4,89 @@ import com.Map.GestorContactes;
 import com.Map.MapBodyManager;
 import com.Map.TiledMapHelper;
 import com.Sprite.Hero;
-import com.Sprite.ParallaxBackground;
-import com.Sprite.ParallaxLayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.game.HeroesNightfall.GameResourses;
 import com.game.HeroesNightfall.HeroesNightfall;
+import com.rahul.libgdx.parallax.ParallaxBackground;
+import com.rahul.libgdx.parallax.TextureRegionParallaxLayer;
+import com.rahul.libgdx.parallax.Utils;
 
 /**
  * Created by Albert on 07/05/2015.
  */
 public class GameScreen extends AbstractScreen {
+
+    /*Parallax testing*/
+    private OrthographicCamera worldCamera;
+    private TextureAtlas atlas;
+    private ParallaxBackground parallaxBackground;
+    private final float worldWidth = 40;
+    private float worldHeight;
+    private Color clearColor = new Color(0Xbeaf7bff);
+    private final float deltaDimen = 0.25f;
+
+    public void init () {
+        worldHeight = Utils.calculateOtherDimension(Utils.WH.width, worldWidth, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        worldCamera = new OrthographicCamera();
+        worldCamera.setToOrtho(false,worldWidth,worldHeight);
+        worldCamera.update();
+        createLayers();
+    }
+
+    private void createLayers() {
+        atlas = new TextureAtlas("data/main_atlas.atlas");
+
+
+        TextureRegion mountainsRegionA = atlas.findRegion("mountains_a");
+        TextureRegionParallaxLayer mountainsLayerA = new TextureRegionParallaxLayer(mountainsRegionA, worldWidth, new Vector2(.3f,.3f), Utils.WH.width);
+
+        TextureRegion mountainsRegionB = atlas.findRegion("mountains_b");
+        TextureRegionParallaxLayer mountainsLayerB = new TextureRegionParallaxLayer(mountainsRegionB, worldWidth*.7275f, new Vector2(.6f,.6f), Utils.WH.width);
+        mountainsLayerB.setPadLeft(.2725f*worldWidth);
+
+        TextureRegion cloudsRegion = atlas.findRegion("clouds");
+        TextureRegionParallaxLayer cloudsLayer = new TextureRegionParallaxLayer(cloudsRegion, worldWidth, new Vector2(.6f,.6f), Utils.WH.width);
+        cloudsLayer.setPadBottom(worldHeight*.467f);
+
+        TextureRegion buildingsRegionA = atlas.findRegion("buildings_a");
+        TextureRegionParallaxLayer buildingsLayerA = new TextureRegionParallaxLayer(buildingsRegionA, worldWidth, new Vector2(.75f,.75f), Utils.WH.width);
+
+        TextureRegion buildingsRegionB = atlas.findRegion("buildings_b");
+        TextureRegionParallaxLayer buildingsLayerB = new TextureRegionParallaxLayer(buildingsRegionB, worldWidth*.8575f, new Vector2(1,1), Utils.WH.width);
+        buildingsLayerB.setPadLeft(.07125f*worldWidth);
+        buildingsLayerB.setPadRight(buildingsLayerB.getPadLeft());
+
+        TextureRegion buildingsRegionC = atlas.findRegion("buildings_c");
+        TextureRegionParallaxLayer buildingsLayerC = new TextureRegionParallaxLayer(buildingsRegionC, worldWidth, new Vector2(1.3f,1.3f), Utils.WH.width);
+
+        parallaxBackground = new ParallaxBackground();
+        parallaxBackground.addLayers(mountainsLayerA,mountainsLayerB,cloudsLayer,buildingsLayerA,buildingsLayerB,buildingsLayerC);
+        //parallaxBackground.addLayers(mountainsLayerA);
+
+
+    }
+
+    private void applyWorldAdvance(){
+        worldCamera.position.add(deltaDimen, 0, 0);
+    }
+
+    /**/
+
+
 
     //Gestio creacio i gestio del nivell
     private TiledMapHelper mapHelper;
@@ -155,11 +216,12 @@ public class GameScreen extends AbstractScreen {
         initMap();
         makePhysics();
 
-        hero = new Hero(world, "sprites/noBlankMario.png", "sprites/stopmario.png", 3, 3, "mario");
+        hero = new Hero(world, "sprites/mario.png", "sprites/stopmario.png", 3, 3, "mario");
 
         enableColissions();
         box2DRenderer = new Box2DDebugRenderer();
-        loadBackground();
+        //loadBackground();
+        init();
 
     }
 
@@ -173,30 +235,28 @@ public class GameScreen extends AbstractScreen {
 
 
         world.step(Gdx.app.getGraphics().getDeltaTime(), 6, 2);
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         moureCamera();
 
-        batch.setProjectionMatrix(mapHelper.getCamera().combined);
 
-        ParallaxBackground rgb = new ParallaxBackground(new ParallaxLayer[]{
-                new ParallaxLayer(new TextureRegion(test,600,320),new Vector2(),new Vector2(0, 0)),
-                new ParallaxLayer(new TextureRegion(test,600,320),new Vector2(1.0f,1.0f),new Vector2(0, 500)),
-                new ParallaxLayer(new TextureRegion(test,650,320),new Vector2(0.1f,0),new Vector2(0,HeroesNightfall.HEIGHT-200),new Vector2(0, 0)),
-        }, 800, 480,new Vector2(150,0));
-        rgb.render(delta);
-
+        applyWorldAdvance();
         batch.begin();
-            //batch.draw(test, 0, 0);
-        hero.dibuixar(batch);
+            parallaxBackground.draw(worldCamera, batch);
         batch.end();
 
-
+        SpriteBatch batch2 = new SpriteBatch();
+        batch2.setProjectionMatrix(mapHelper.getCamera().combined);
+        batch2.begin();
+            hero.dibuixar(batch2);
+        batch2.end();
 
         mapHelper.render();
 
-        Gdx.app.log(String.valueOf(hero.getCos().getPosition().y),"har");
+
+        //Gdx.app.log(String.valueOf(hero.getCos().getPosition().y),"har");
+
         box2DRenderer.render(world, mapHelper.getCamera().combined.scale(
                 GameResourses.PIXELS_PER_METRE, GameResourses.PIXELS_PER_METRE,
                 GameResourses.PIXELS_PER_METRE));
@@ -205,7 +265,11 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-
+        super.dispose();
+        //batch.dispose();
+        hero.dispose();
+        world.dispose();
+        atlas.dispose();
     }
     public void show() {
 
