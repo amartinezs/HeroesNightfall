@@ -3,6 +3,7 @@ package com.screen;
 import com.Map.GestorContactes;
 import com.Map.MapBodyManager;
 import com.Map.TiledMapHelper;
+import com.Sprite.AtlasAnimation;
 import com.Sprite.Hero;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -87,7 +88,7 @@ public class GameScreen extends AbstractScreen {
     /**/
 
 
-
+    AtlasAnimation atan;
     //Gestio creacio i gestio del nivell
     private TiledMapHelper mapHelper;
     private World world;
@@ -222,6 +223,7 @@ public class GameScreen extends AbstractScreen {
         box2DRenderer = new Box2DDebugRenderer();
         //loadBackground();
         init();
+        atan = new AtlasAnimation("gameObjects/coin.atlas",world);
 
     }
 
@@ -246,10 +248,13 @@ public class GameScreen extends AbstractScreen {
             parallaxBackground.draw(worldCamera, batch);
         batch.end();
 
+
         SpriteBatch batch2 = new SpriteBatch();
+
         batch2.setProjectionMatrix(mapHelper.getCamera().combined);
         batch2.begin();
             hero.dibuixar(batch2);
+            atan.draw(batch2, delta);
         batch2.end();
 
         mapHelper.render();
@@ -266,6 +271,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void dispose() {
         super.dispose();
+        atan.dispose();
         //batch.dispose();
         hero.dispose();
         world.dispose();

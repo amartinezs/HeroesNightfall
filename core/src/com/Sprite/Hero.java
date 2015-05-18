@@ -47,6 +47,7 @@ public class Hero {
         //carregarSons();
         crearProtagonista(positionX, positionY, tag);
         setAlive(true);
+        getCos().setGravityScale(0);
     }
 
 
@@ -106,7 +107,7 @@ public class Hero {
     }
 
     public void inicialitzarMoviments() {
-        setMoureDreta(true);
+        setMoureDreta(false);
         setMoureEsquerra(false);
         setFerSalt(false);
 
