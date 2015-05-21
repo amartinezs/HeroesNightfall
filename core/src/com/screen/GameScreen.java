@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,6 +20,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.game.HeroesNightfall.GameResourses;
 import com.game.HeroesNightfall.HeroesNightfall;
@@ -39,13 +43,21 @@ public class GameScreen extends AbstractScreen {
     private float worldHeight;
     private Color clearColor = new Color(0Xbeaf7bff);
     private final float deltaDimen = 0.25f;
+    private BitmapFont font = new BitmapFont();
+    Skin skin = new Skin(Gdx.files.internal("skins/skin.json"));
+    int i = 0;
+    Label score;
+    private Table table = new Table();
+
 
     public void init () {
         worldHeight = Utils.calculateOtherDimension(Utils.WH.width, worldWidth, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         worldCamera = new OrthographicCamera();
-        worldCamera.setToOrtho(false,worldWidth,worldHeight);
+        worldCamera.setToOrtho(false, worldWidth, worldHeight);
         worldCamera.update();
         createLayers();
+        stageMenu.clear();
+
     }
 
     private void createLayers() {
@@ -83,6 +95,7 @@ public class GameScreen extends AbstractScreen {
 
     private void applyWorldAdvance(){
         worldCamera.position.add(deltaDimen, 0, 0);
+
     }
 
     /**/
@@ -95,7 +108,6 @@ public class GameScreen extends AbstractScreen {
     MapBodyManager mapBodyManager;
     float rotationSpeed = 0.5f;
     Box2DDebugRenderer box2DRenderer;
-
 
     //Gestor de colisions y llista de cosos a destruir
     GestorContactes gestorContactes;
@@ -132,6 +144,7 @@ public class GameScreen extends AbstractScreen {
         mapHelper.setPackerDirectory("levels/Zone1");
         mapHelper.loadMap("levels/Zone1/theFinalMap.tmx");
         mapHelper.prepareCamera(joc.getScreenWidth(),joc.getScreenHeight());
+
     }
     /**Crea la la fisica del joc
      * asignant les propietats per material segons el fitxer json*/
@@ -150,7 +163,7 @@ public class GameScreen extends AbstractScreen {
         world.setContactListener(gestorContactes);
     }
     /**
-     * Moure la càmera en funció de la posició del personatge
+     * Moure la cï¿½mera en funciï¿½ de la posiciï¿½ del personatge
      */
     private void moureCamera() {
 
@@ -169,19 +182,20 @@ public class GameScreen extends AbstractScreen {
 
         if (Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)) {
             hero.setMoureDreta(true);
-
+            hero.setScore(i++);
         } else {
             for (int i = 0; i < 2; i++) {
                 if (Gdx.input.isTouched(i)
                         && Gdx.input.getX() > Gdx.graphics.getWidth() * 0.80f) {
                     hero.setMoureDreta(true);
+                    hero.setScore(i++);
+
                 }
             }
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.DPAD_LEFT)) {
             hero.setMoureEsquerra(true);
-
         } else {
             for (int i = 0; i < 2; i++) {
                 if (Gdx.input.isTouched(i)
@@ -235,26 +249,24 @@ public class GameScreen extends AbstractScreen {
         hero.moure();
         hero.updatePosition();
 
-
         world.step(Gdx.app.getGraphics().getDeltaTime(), 6, 2);
         Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         moureCamera();
-
-
         applyWorldAdvance();
         batch.begin();
-            parallaxBackground.draw(worldCamera, batch);
+        parallaxBackground.draw(worldCamera, batch);
+
+        stageMenu.draw();
         batch.end();
-
-
         SpriteBatch batch2 = new SpriteBatch();
 
         batch2.setProjectionMatrix(mapHelper.getCamera().combined);
         batch2.begin();
-            hero.dibuixar(batch2);
-            atan.draw(batch2, delta);
+        hero.dibuixar(batch2);
+        atan.draw(batch2, delta);
+
         batch2.end();
 
         mapHelper.render();
@@ -272,13 +284,17 @@ public class GameScreen extends AbstractScreen {
     public void dispose() {
         super.dispose();
         atan.dispose();
-        //batch.dispose();
+        //.dispose();
+        stageMenu.dispose();
         hero.dispose();
         world.dispose();
         atlas.dispose();
     }
     public void show() {
-
+        score = new Label("Score: " + hero.getScore(), skin);
+        table.add(score).padBottom(600).row();
+        table.padLeft(600);
+        stageMenu.addActor(table);
     }
 
 

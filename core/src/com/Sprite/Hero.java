@@ -30,14 +30,15 @@ public class Hero {
     private boolean personatgeCaraDreta;
     private float yPosition = 0;
 
-    private World world;                // Referència al mon on està definit el personatge
+    private World world;                // Referï¿½ncia al mon on estï¿½ definit el personatge
     private Body cos;                   // per definir les propietats del cos
     private Sprite spritePersonatge;    // sprite associat al personatge
-    private AnimatorWalk spriteAnimat;// animació de l'sprite
+    private AnimatorWalk spriteAnimat;// animaciï¿½ de l'sprite
     private Texture stoppedTexture;     // la seva textura
     private Sound soSalt;               // el so que reprodueix en saltar
     private Texture animatedTexture;
     private boolean isAlive;
+    private int score=0;
 
 
     public Hero(World world, String animatedImage, String stoppedImage, float positionX, float positionY, String tag){
@@ -73,7 +74,7 @@ public class Hero {
         setSpritePersonatge(new Sprite(getAnimatedTexture()));
         setSpriteAnimat(new AnimatorWalk(getSpritePersonatge(), FRAME_COLS, FRAME_ROWS, getStoppedTexture()));
 
-        // Definir el tipus de cos i la seva posició
+        // Definir el tipus de cos i la seva posiciï¿½
         BodyDef defCos = new BodyDef();
         defCos.type = BodyDef.BodyType.DynamicBody;
         defCos.position.set(position1, position2);
@@ -88,8 +89,8 @@ public class Hero {
                 (getSpritePersonatge().getHeight() / FRAME_ROWS) / (2 *GameResourses.PIXELS_PER_METRE));
 
         /**
-         * La densitat i fricció del protagonista. Si es modifiquen aquests
-         * valor anirà més ràpid o més lent.
+         * La densitat i fricciï¿½ del protagonista. Si es modifiquen aquests
+         * valor anirï¿½ mï¿½s rï¿½pid o mï¿½s lent.
          */
         FixtureDef propietats = new FixtureDef();
         propietats.shape = requadre;
@@ -120,7 +121,7 @@ public class Hero {
     }
 
     /**
-     * Actualitza la posició de l'sprite
+     * Actualitza la posiciï¿½ de l'sprite
      */
     public void updatePosition() {
         getSpritePersonatge().setPosition(
@@ -139,8 +140,8 @@ public class Hero {
     /**
      * Fer que el personatge es mogui
      * <p/>
-     * Canvia la posició del protagonista
-     * Es tracta de forma separada el salt perquè es vol que es pugui moure si salta
+     * Canvia la posiciï¿½ del protagonista
+     * Es tracta de forma separada el salt perquï¿½ es vol que es pugui moure si salta
      * al mateix temps..
      * <p/>
      * Els impulsos s'apliquen des del centre del protagonista
@@ -270,6 +271,8 @@ public class Hero {
     public void setSpriteAnimat(AnimatorWalk spriteAnimat) {
         this.spriteAnimat = spriteAnimat;
     }
+    public int getScore() {return score;}
+    public void setScore(int score) { this.score = this.score + score; }
 
 
 

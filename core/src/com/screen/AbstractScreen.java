@@ -44,6 +44,7 @@ public class AbstractScreen implements Screen, InputProcessor {
         this.batch = new SpriteBatch();
         // definim l'stage amb un viewport de mida 0x0px i que mantingui la relaci? d'aspecte
         this.stageMenu = new StageMenu(joc); //0, 0, true);
+        this.stageMenu = new StageMenu(joc); //0, 0, true);
         Gdx.input.setInputProcessor(this);
     }
 

@@ -11,8 +11,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-
-import java.util.ArrayList;
 /**
  * Classe que implementa la interface de gesti? de contactes
  *
@@ -46,6 +44,10 @@ public class GestorContactes implements ContactListener {
         if(fixtureA.getBody().getUserData().equals("mario") || fixtureB.getBody().getUserData().toString().equals("mario")){
             hero.getSpriteAnimat().setDirection(AnimatorWalk.Direction.STOPPED);
             Gdx.app.log("beginContact","para ostia");
+        }
+        if(fixtureA.getBody().getUserData().equals("coin") || fixtureB.getBody().getUserData().toString().equals("coin")){
+            hero.setScore(25);
+            Gdx.app.log("beginContact","mec");
         }
     }
 
