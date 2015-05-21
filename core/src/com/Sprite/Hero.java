@@ -47,7 +47,7 @@ public class Hero {
         //carregarSons();
         crearProtagonista(positionX, positionY, tag);
         setAlive(true);
-        getCos().setGravityScale(0);
+        //getCos().setGravityScale(0);
     }
 
 

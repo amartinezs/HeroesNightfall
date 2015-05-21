@@ -19,7 +19,7 @@ import com.game.HeroesNightfall.GameResourses;
 public class AtlasAnimation {
 
     private TextureAtlas spriteSheet;
-    private Array<Sprite> sprites;
+    private Array<Sprite> spriteAnimation;
     private World world;
     private Body cos;
     private Animation animation;
@@ -30,10 +30,11 @@ public class AtlasAnimation {
 
     public AtlasAnimation(String spriteSheetPath, World world){
         spriteSheet = new TextureAtlas(spriteSheetPath);
+
         animation = new Animation(0.1f,spriteSheet.getRegions());
         this.world = world;
 
-        createObject(4,3,"coin");
+        createObject(4, 3, "coin");
         //0.0116f
 
     }
@@ -41,14 +42,14 @@ public class AtlasAnimation {
     public void draw(SpriteBatch batch, float delta){
         elapsedTime += delta;
 
-        float posicioX = cos.getLinearVelocity().x*elapsedTime*conversion+cos.getPosition().x;
-        //float posicioY = ;
+        float posicioX = GameResourses.PIXELS_PER_METRE * cos.getPosition().x
+                - animation.getKeyFrame(elapsedTime, true).getRegionWidth()/2;//((cos.getLinearVelocity().x*delta)+(conversion*cos.getPosition().x))*GameResourses.PIXELS_PER_METRE;//conversion*cos.getPosition().x
+        float posicioY = GameResourses.PIXELS_PER_METRE * cos.getPosition().y
+                - animation.getKeyFrame(elapsedTime, true).getRegionHeight()/2;//((cos.getLinearVelocity().y*delta)+(conversion*cos.getPosition().y))*GameResourses.PIXELS_PER_METRE;//cos.getPosition().y*conversion
         Gdx.app.log("Speed: ", String.valueOf(cos.getLinearVelocity().x));
-        if(cos.getLinearVelocity().x > 0){
-            batch.draw(animation.getKeyFrame(elapsedTime, true),posicioX,cos.getPosition().y*conversion);
-        } else {
-            batch.draw(animation.getKeyFrame(elapsedTime, true),cos.getPosition().x*conversion,cos.getPosition().y*conversion);
-        }
+
+        batch.draw(animation.getKeyFrame(elapsedTime, true),posicioX,posicioY);
+
     }
 
     public void dispose() {
@@ -72,8 +73,8 @@ public class AtlasAnimation {
              * Definir les vores de l'sprite
              */
             PolygonShape requadre = new PolygonShape();
-            requadre.setAsBox((spriteSheet.findRegion("Coin1").getRegionWidth()/2) / (2 * GameResourses.PIXELS_PER_METRE),
-                    (spriteSheet.findRegion("Coin1").getRegionHeight()/2) / (2 *GameResourses.PIXELS_PER_METRE));
+            requadre.setAsBox((spriteSheet.findRegion("Coin1").getRegionWidth()) / (2 * GameResourses.PIXELS_PER_METRE),
+                    (spriteSheet.findRegion("Coin1").getRegionHeight()) / (2 *GameResourses.PIXELS_PER_METRE));
 
             /**
              * La densitat i fricció del protagonista. Si es modifiquen aquests
@@ -94,6 +95,21 @@ public class AtlasAnimation {
 
 
 
+    }
+
+
+    public void updatePosition() {
+  /*      int[] positions;
+
+        positions[0] = ;
+
+        getSpritePersonatge().setPosition(
+                GameResourses.PIXELS_PER_METRE * getCos().getPosition().x
+                        - getSpritePersonatge().getWidth() / FRAME_COLS / 2,
+                GameResourses.PIXELS_PER_METRE* getCos().getPosition().y
+                        - getSpritePersonatge().getHeight() / FRAME_ROWS / 2);
+        getSpriteAnimat().setPosition(getSpritePersonatge().getX(), getSpritePersonatge().getY());
+*/
     }
 
 
