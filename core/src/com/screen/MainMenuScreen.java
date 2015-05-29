@@ -2,6 +2,7 @@ package com.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -21,6 +22,8 @@ import com.uwsoft.editor.renderer.resources.ResourceManager;
 public class MainMenuScreen extends AbstractScreen {
 
     private HeroesNightfall game;
+    Music musica;
+
     /**
      * Constructor
      *
@@ -31,6 +34,7 @@ public class MainMenuScreen extends AbstractScreen {
         this.game = joc;
         stageMenu.clear();
         stageMenu.loadThatScene("MainScene");
+
         //ResourceManager rm = new ResourceManager();
         //GameStage gs = new GameStage(rm);
     }
@@ -57,7 +61,12 @@ public class MainMenuScreen extends AbstractScreen {
 
     @Override
     public void show() {
-
+        musica = Gdx.audio.newMusic(Gdx.files
+                .internal("audio/02 Telepathetic.mp3"));
+        musica.setLooping(true);
+        musica.setPosition(3f);
+        musica.setVolume(1f);
+        musica.play();
 
 
     }
@@ -77,7 +86,7 @@ public class MainMenuScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-
+        musica.dispose();
 
 
     }

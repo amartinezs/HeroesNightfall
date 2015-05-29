@@ -1,16 +1,14 @@
 package com.Sprite;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.game.HeroesNightfall.GameResourses;
 
 /**
@@ -18,38 +16,63 @@ import com.game.HeroesNightfall.GameResourses;
  */
 public class AtlasAnimation {
 
+    public enum Direction {RIGHT,JUMP,STOP,FALLING};
+
     private TextureAtlas spriteSheet;
-    private Array<Sprite> spriteAnimation;
+
+    private float positionX;
+    private float positionY;
     private World world;
-    private Body cos;
+
+
     private Animation animation;
     private float elapsedTime;
     private float fps;
 
-    private float conversion = 87.5f;
 
-    public AtlasAnimation(String spriteSheetPath, World world){
+    private Body cos;
+    private float friction, density;
+
+    /**
+     * Creates an animation and a body for that animation in the map
+     * By default does an animation with all the regions in the atlas
+     * and body with the width and height of the modelRegion parameter
+     * */
+    public AtlasAnimation(String spriteSheetPath, float positionX, float positionY, World world, float fps , String tag, String modelRegionName){
         spriteSheet = new TextureAtlas(spriteSheetPath);
-
-        animation = new Animation(0.1f,spriteSheet.getRegions());
+        this.fps = fps;
+        animation = new Animation(this.fps,spriteSheet.getRegions());
         this.world = world;
-
-        createObject(4, 3, "coin");
-        //0.0116f
-
+        this.positionX = positionX;
+        this.positionY = positionY;
+        createObject(positionX, positionY, tag, modelRegionName);
     }
+    /**
+     * Creates an animation and a body with a custom width and height
+     * for that animation
+     *
+     * */
+    public AtlasAnimation(String spriteSheetPath, float positionX, float positionY, World world, float fps , String tag, float width, float height){
+        spriteSheet = new TextureAtlas(spriteSheetPath);
+        this.fps = fps;
+        animation = new Animation(this.fps,spriteSheet.getRegions());
+        this.world = world;
+        this.positionX = positionX;
+        this.positionY = positionY;
+        createObject(positionX, positionY, tag, width, height);
+    }
+
 
     public void draw(SpriteBatch batch, float delta){
         elapsedTime += delta;
+        updatePosition();
+        batch.draw(animation.getKeyFrame(elapsedTime, true), positionX, positionY);
+    }
 
-        float posicioX = GameResourses.PIXELS_PER_METRE * cos.getPosition().x
-                - animation.getKeyFrame(elapsedTime, true).getRegionWidth()/2;//((cos.getLinearVelocity().x*delta)+(conversion*cos.getPosition().x))*GameResourses.PIXELS_PER_METRE;//conversion*cos.getPosition().x
-        float posicioY = GameResourses.PIXELS_PER_METRE * cos.getPosition().y
-                - animation.getKeyFrame(elapsedTime, true).getRegionHeight()/2;//((cos.getLinearVelocity().y*delta)+(conversion*cos.getPosition().y))*GameResourses.PIXELS_PER_METRE;//cos.getPosition().y*conversion
-        Gdx.app.log("Speed: ", String.valueOf(cos.getLinearVelocity().x));
-
-        batch.draw(animation.getKeyFrame(elapsedTime, true),posicioX,posicioY);
-
+    public void draw(SpriteBatch batch, float delta, float width, float height){
+        elapsedTime += delta;
+        updatePositionCustom(width,height);
+        batch.draw(animation.getKeyFrame(elapsedTime, true), positionX, positionY,width,height);
     }
 
     public void dispose() {
@@ -57,11 +80,49 @@ public class AtlasAnimation {
     }
 
 
+    /**
+     * createObject overload method does the same but creates a body the specified width and height
+     * */
+    public void createObject(float positionX, float positionY, String tag, float width, float height){
+        // Definir el tipus de cos i la seva posiciï¿½
+        BodyDef defCos = new BodyDef();
+        defCos.type = BodyDef.BodyType.DynamicBody;
+        defCos.position.set(positionX, positionY);
+
+        cos = world.createBody(defCos);
+        cos.setUserData(tag);
+
+        /**
+         * Definir les vores de l'sprite
+         */
+        PolygonShape requadre = new PolygonShape();
+        requadre.setAsBox(width / (2 * GameResourses.PIXELS_PER_METRE),
+                height / (2 *GameResourses.PIXELS_PER_METRE));
+
+        /**
+         * La densitat i fricciï¿½ del protagonista. Si es modifiquen aquests
+         * valor anirï¿½ mï¿½s rï¿½pid o mï¿½s lent.
+         */
+        FixtureDef propietats = new FixtureDef();
+        propietats.shape = requadre;
+        propietats.density = 1.0f;
+        propietats.friction = 1.0f;
+
+        cos.setFixedRotation(true);
+        cos.createFixture(propietats);
+
+        //cos.setGravityScale(0);
+
+        requadre.dispose();
 
 
-    public void createObject(float positionX, float positionY, String tag){
 
-            // Definir el tipus de cos i la seva posició
+    }
+
+
+    public void createObject(float positionX, float positionY, String tag, String modelRegionName){
+
+            // Definir el tipus de cos i la seva posiciï¿½
             BodyDef defCos = new BodyDef();
             defCos.type = BodyDef.BodyType.DynamicBody;
             defCos.position.set(positionX, positionY);
@@ -73,22 +134,22 @@ public class AtlasAnimation {
              * Definir les vores de l'sprite
              */
             PolygonShape requadre = new PolygonShape();
-            requadre.setAsBox((spriteSheet.findRegion("Coin1").getRegionWidth()) / (2 * GameResourses.PIXELS_PER_METRE),
-                    (spriteSheet.findRegion("Coin1").getRegionHeight()) / (2 *GameResourses.PIXELS_PER_METRE));
+            requadre.setAsBox((spriteSheet.findRegion(modelRegionName).getRegionWidth()) / (2 * GameResourses.PIXELS_PER_METRE),
+                    (spriteSheet.findRegion(modelRegionName).getRegionHeight()) / (2 *GameResourses.PIXELS_PER_METRE));
 
             /**
-             * La densitat i fricció del protagonista. Si es modifiquen aquests
-             * valor anirà més ràpid o més lent.
+             * La densitat i fricciï¿½ del protagonista. Si es modifiquen aquests
+             * valor anirï¿½ mï¿½s rï¿½pid o mï¿½s lent.
              */
             FixtureDef propietats = new FixtureDef();
             propietats.shape = requadre;
-            propietats.density = 0.0f;
-            propietats.friction = 0.0f;
+            propietats.density = 1.0f;
+            propietats.friction = 1.0f;
 
             cos.setFixedRotation(true);
             cos.createFixture(propietats);
 
-        cos.setGravityScale(0);
+        //cos.setGravityScale(0);
 
         requadre.dispose();
 
@@ -97,22 +158,90 @@ public class AtlasAnimation {
 
     }
 
-
     public void updatePosition() {
-  /*      int[] positions;
-
-        positions[0] = ;
-
-        getSpritePersonatge().setPosition(
-                GameResourses.PIXELS_PER_METRE * getCos().getPosition().x
-                        - getSpritePersonatge().getWidth() / FRAME_COLS / 2,
-                GameResourses.PIXELS_PER_METRE* getCos().getPosition().y
-                        - getSpritePersonatge().getHeight() / FRAME_ROWS / 2);
-        getSpriteAnimat().setPosition(getSpritePersonatge().getX(), getSpritePersonatge().getY());
-*/
+        positionX = GameResourses.PIXELS_PER_METRE * cos.getPosition().x
+                - animation.getKeyFrame(elapsedTime, true).getRegionWidth()/2;
+        positionY = GameResourses.PIXELS_PER_METRE * cos.getPosition().y
+                - animation.getKeyFrame(elapsedTime, true).getRegionHeight()/2;
     }
 
+    public void updatePositionCustom(float width, float height){
+        positionX = GameResourses.PIXELS_PER_METRE * cos.getPosition().x
+                - width/2;
+        positionY = GameResourses.PIXELS_PER_METRE * cos.getPosition().y
+                - height/2;
+    }
 
+    public TextureAtlas getSpriteSheet() {
+        return spriteSheet;
+    }
+
+    public void setSpriteSheet(TextureAtlas spriteSheet) {
+        this.spriteSheet = spriteSheet;
+    }
+
+    public float getPositionX() {
+        return positionX;
+    }
+
+    public void setPositionX(float positionX) {
+        this.positionX = positionX;
+    }
+
+    public float getPositionY() {
+        return positionY;
+    }
+
+    public void setPositionY(float positionY) {
+        this.positionY = positionY;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
+    }
+
+    public Body getCos() {
+        return cos;
+    }
+
+    public void setCos(Body cos) {
+        this.cos = cos;
+    }
+
+    public Animation getAnimation() {
+        return animation;
+    }
+
+    public void setAnimation(Animation animation) {
+        this.animation = animation;
+    }
+
+    public float getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public void setElapsedTime(float elapsedTime) {
+        this.elapsedTime = elapsedTime;
+    }
+
+    public float getFps() {
+        return fps;
+    }
+
+    public void setFps(float fps) {
+        this.fps = fps;
+    }
+
+    public TextureRegion getTextureRegion(String regionName){
+
+        return spriteSheet.findRegion(regionName);
+
+
+    }
 
 
 }

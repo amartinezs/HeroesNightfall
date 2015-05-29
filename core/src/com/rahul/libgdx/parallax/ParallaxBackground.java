@@ -26,6 +26,7 @@ public class ParallaxBackground {
 	private Matrix4 cachedProjectionView;
 	private Vector3 cachedPos;
 	private float cachedZoom;
+	private boolean stopped;
 	
 	/**
 	 * Create a ParallaxBackground without any layers
@@ -49,6 +50,7 @@ public class ParallaxBackground {
     	layers = new Array<ParallaxLayer>();
 		cachedPos = new Vector3();
 		cachedProjectionView = new Matrix4();
+		stopped = false;
 	}
 	
 	/**
@@ -100,6 +102,7 @@ public class ParallaxBackground {
 		batch.setProjectionMatrix(worldCamera.combined);
 	    
 	}
-	
+
+
 
 }

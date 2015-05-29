@@ -38,7 +38,7 @@ public class Hero {
     private Sound soSalt;               // el so que reprodueix en saltar
     private Texture animatedTexture;
     private boolean isAlive;
-    private int score=0;
+    private int score;
 
 
     public Hero(World world, String animatedImage, String stoppedImage, float positionX, float positionY, String tag){
@@ -48,6 +48,7 @@ public class Hero {
         //carregarSons();
         crearProtagonista(positionX, positionY, tag);
         setAlive(true);
+        score = 0;
         //getCos().setGravityScale(0);
     }
 
@@ -272,7 +273,7 @@ public class Hero {
         this.spriteAnimat = spriteAnimat;
     }
     public int getScore() {return score;}
-    public void setScore(int score) { this.score = this.score + score; }
+    public void setScore(int score) { this.score += score; }
 
 
 

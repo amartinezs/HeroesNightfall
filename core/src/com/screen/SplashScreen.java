@@ -15,7 +15,6 @@ public class SplashScreen extends AbstractScreen {
 
     private Texture splashTexture;
     private Image splashImage;
-    //private Music musica;
 
     public SplashScreen(HeroesNightfall joc) {
         super(joc);
@@ -26,15 +25,11 @@ public class SplashScreen extends AbstractScreen {
 
         super.show();
 
-        //musica = Gdx.audio.newMusic(Gdx.files
-              //  .internal("sons/gameOfThrones.mp3"));
-        //musica.setLooping(true);
-        //musica.setVolume(1f);
-        //musica.play();
+
 
         // carregar la imatge
         splashTexture = new Texture(
-                Gdx.files.internal("win.png"));
+                Gdx.files.internal("win.jpg"));
         // seleccionar Linear per millorar l'estirament
         splashTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 

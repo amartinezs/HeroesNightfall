@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.Array;
  */
 public class AnimatorWalk {
     /**
-     * Enumeració per les direccions
+     * Enumeracio per les direccions
      */
     public enum Direction {LEFT, RIGHT, STOPPED};
 
@@ -32,7 +32,7 @@ public class AnimatorWalk {
      * @param sprite        sprite associat al personatge
      * @param textureCols   columnes de la textura
      * @param textureRows   files de la textura
-     * @param stoppedTexture textura a utilitzar quan el personatge està aturat
+     * @param stoppedTexture textura a utilitzar quan el personatge esta aturat
      */
     public AnimatorWalk(Sprite sprite, int textureCols, int textureRows, Texture stoppedTexture) {
         Texture framesTexture = sprite.getTexture();
