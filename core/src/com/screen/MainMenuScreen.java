@@ -50,6 +50,8 @@ public class MainMenuScreen extends AbstractScreen {
         } else if(HeroesNightfall.gameMode == 1){
             //stageMenu.clear();
             ((Game)Gdx.app.getApplicationListener()).setScreen(new GameScreen(game));
+        } else if(HeroesNightfall.gameMode == 3){
+            Gdx.app.exit();
         }
 
 

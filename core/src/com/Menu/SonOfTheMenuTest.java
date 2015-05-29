@@ -44,9 +44,10 @@ public class SonOfTheMenuTest extends MenuMotherScript {
             String buttonName = eventButton.getButtonId();
             if(eventButton.getButtonScript().isDown()){
                 if(buttonName == PLAY_BUTTON){
-                    Gdx.app.log("Touch a la ","ovella");
+                    Gdx.app.log("Touch al play ","juga");
                     HeroesNightfall.gameMode = 1;
                 } else if(buttonName == EXIT_BUTTON) {
+                    HeroesNightfall.gameMode = 3;
                     Gdx.app.log("Touch al boto exit"," Tanquem aplicacio");
                 } else if(buttonName == CUSTOM_BUTTON){
                     Gdx.app.log("Touch al boto custom"," obrim custom");

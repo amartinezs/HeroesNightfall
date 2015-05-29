@@ -105,7 +105,7 @@ public class Soldier extends Enemy {
             calcDistanceFromPlayer(player);
 
             if(atlas.getCos().getLinearVelocity().x < 0.1f && distanceFromPlayer > 2.5f){
-                atlas.getCos().applyLinearImpulse(new Vector2(-0.2f, 0.0f),
+                atlas.getCos().applyLinearImpulse(new Vector2(-1.0f, 0.0f),
                         atlas.getCos().getWorldCenter(), true);
             } else if(distanceFromPlayer < 2.5f && distanceFromPlayer > 1.5f && !engaging ){
                 atlas.getCos().applyLinearImpulse(new Vector2(-2.0f, 1.0f),

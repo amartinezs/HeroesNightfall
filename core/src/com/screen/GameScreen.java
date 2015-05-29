@@ -20,7 +20,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -294,7 +293,7 @@ public class GameScreen extends AbstractScreen {
         soldier = new Soldier("sprites/soldier.atlas",100,4,world,GameResourses.FPS,"soldier");
 
         enableColissions();
-        box2DRenderer = new Box2DDebugRenderer();
+        //box2DRenderer = new Box2DDebugRenderer();
         timedelay = 0;
 
 
@@ -353,9 +352,9 @@ public class GameScreen extends AbstractScreen {
             mapHelper.render();
 
             //Debug renderer
-            box2DRenderer.render(world, mapHelper.getCamera().combined.scale(
+            /*box2DRenderer.render(world, mapHelper.getCamera().combined.scale(
                     GameResourses.PIXELS_PER_METRE, GameResourses.PIXELS_PER_METRE,
-                    GameResourses.PIXELS_PER_METRE));
+                    GameResourses.PIXELS_PER_METRE));*/
             destroyBodies();
         } else {
             epicHero.setMoveRight(true);
@@ -422,9 +421,9 @@ public class GameScreen extends AbstractScreen {
                 mapHelper.render();
 
             //Debug renderer
-            box2DRenderer.render(world, mapHelper.getCamera().combined.scale(
+            /*box2DRenderer.render(world, mapHelper.getCamera().combined.scale(
                     GameResourses.PIXELS_PER_METRE, GameResourses.PIXELS_PER_METRE,
-                    GameResourses.PIXELS_PER_METRE));
+                    GameResourses.PIXELS_PER_METRE));*/
 
         }
 
@@ -443,7 +442,7 @@ public class GameScreen extends AbstractScreen {
             if(timedelay >= 1.5f){
                 ((Game)Gdx.app.getApplicationListener()).setScreen(null);
                 HeroesNightfall.gameMode = 0;
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(joc));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen(joc));
             }
 
         } else if(!epicHero.isPlatformMode()){
@@ -510,15 +509,14 @@ public class GameScreen extends AbstractScreen {
         labelWin = new Label("Level Complete",skin);
 
         labelGameOver.setPosition(300,250);
-        labelWin.setPosition(300,250);
+        labelWin.setPosition(300, 250);
 
-        labelGameOver.setSize(100,100);
+        labelGameOver.setSize(100, 100);
 
         labelGameOver.setVisible(false);
         labelWin.setVisible(false);
 
-        //TODO Visual paradigm ingenieria inversa
-        table.debug();
+        //table.debug();
 
         stageMenu.addActor(table);
         stageMenu.addActor(labelAttack);
