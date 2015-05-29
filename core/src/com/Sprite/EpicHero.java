@@ -99,19 +99,19 @@ public class EpicHero {
     public void moure() {
 
         if (moveRight && atlas.getCos().getLinearVelocity().x < 2 && alive) {
-            atlas.getCos().applyLinearImpulse(new Vector2(0.2f, 0.0f),
+            atlas.getCos().applyLinearImpulse(new Vector2(0.5f, 0.0f),
                     atlas.getCos().getWorldCenter(), true);
             //getSpriteAnimat().setDirection(AnimatorWalk.Direction.RIGHT);
 
             //setPersonatgeCaraDreta(true);
         } else if (moveLeft && alive) {
-            atlas.getCos().applyLinearImpulse(new Vector2(-0.2f, 0.0f),
+            atlas.getCos().applyLinearImpulse(new Vector2(-0.5f, 0.0f),
                     atlas.getCos().getWorldCenter(), true);
             //setPersonatgeCaraDreta(false);
         }
 
         if (jump && Math.abs(atlas.getCos().getLinearVelocity().y) < 1e-9 && alive) {
-            atlas.getCos().applyLinearImpulse(new Vector2(0.0f, 6.0f),
+            atlas.getCos().applyLinearImpulse(new Vector2(0.0f, 4.5f),
                     atlas.getCos().getWorldCenter(), true);
             //long id = soSalt.play();
         }
