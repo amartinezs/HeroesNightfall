@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="430" height="15" tilewidth="32" tileheight="32" nextobjectid="33">
+ <tileset firstgid="1" name="machinetexture" tilewidth="32" tileheight="32" margin="20">
+  <image source="machinetextures/machinetexture.jpg" width="640" height="480"/>
+ </tileset>
+ <layer name="backLayer" width="430" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztzqtSAlAURmGULBqALBrUYFIJSkYJYlYISkZ5BC/BGyYvQVF4VRcvcJhTPMxxfTNrZs/8ZRcKkiRJkiRJkiRJkiRJkiRJkiRJmkdLVKJlWpmx3dMDPdITPdOQXtzc3JJu0tR26gf+yCrVaI3WZ2yf9EUj+qYfGtPEzc0t6ab/Z4EWqRi4c7VDu7RH9YhNkpROmSpUDdy5atIhHVErYpMkpbNBm7QVuHN1SmfUoW7EJklKZ58OqBG4c9WnS7qiQcQmSUrnmNp0ErhzdU03dEt3EZskKZ1zuqBe4M7VK73RO31EbJLmxy9/yCdR
+  </data>
+ </layer>
+ <layer name="groundLayer" width="430" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt29Vy1VAYhuFVHGaQS0AuAbkE5BKQS0AOcHenuOvGXYsU9+KuRYtbcdfy7jPYzd826dqkYb53+pwkey0y6Uz/SUqdU0oppZRSSimllFJKKaWUUkqp+JuG6ZiBmZiF2bFekVJKqaByMRGTMDnma4mzFViJVViNNVgb6xUppVTl644e6Ile6I0+6It+6I8BGIhBGIwhGIphGI4RGBlxjVVuyL3+LIXFWIKlIe5FUrOeq3ZiF3ZjD/ZiX0zXqJRSvhqF0RiDsRiH8ZjgSj+3TMFUZ/+cjLLGKjfkXhXpf30Os56rTuMMzuIczuNCTNcYpfpogIZo5OmcUir5zcFczMN8LMBCLHKln1uWYbmzf05GWWOVCrlXRcrcr7yizLmg2WzNbF/Hg+5R2l0U4R7u4wEeOvt7XtVqjCZoimaezimlkt86rMcGbMQmbMYW5GErtmE7diDf2e+foqyxygu5VzZKufDvG4NmszWzfR0Pukf5zp75QcUxy8r7N5ujBVqiVcbaqOeUUslvPw7gIA7hMI7gKApwDMdxAidxytnvn6KssSoIuVdVKWg2WzPb1/Gge5Rmzfyk1Bpt0BbtPJ1TSiW/i7iEy7iCq7iG6yjEDdzELdzGHWe/f4qyxqow5F6VKez7wLI+HzSbrZnt63jQPUqzZn5Sao8O6IhOns4ppZLfIzzGEzzFMzzHCxTjJV7hNd7gLd7hPT7gIz7hc8Q1VsUh96pMKRfufWBZny9ypWezNbN9HQ+6R2nWzP/XRX0H2Rld0BXdPJ1TSiW/L/iKb/iOH/iJXyhJfyCHL1RDddRATdRCbdRBXdTLibbGqiTkXlWloNlszWxfx4PuUZo187OZz9+TZf7Ng49zSiml/i5oNlszO9vHrZkfNmsWZfv/cmT+zYOPc0qp5PcbzpAMAQ==
+  </data>
+ </layer>
+ <objectgroup name="Box2D">
+  <object id="1" name="firstZone" type="fixture" x="-14" y="190" width="1037" height="259">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="2" name="level1Ground" type="fixture" x="1216" y="192" width="382" height="257">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="3" name="level1Ground" type="fixture" x="1695" y="161" width="128" height="60">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="4" name="level1Ground" type="fixture" x="1889" y="224" width="126" height="62">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="5" name="level1Ground" type="fixture" x="2080" y="352" width="128" height="61">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="6" name="level1Ground" type="fixture" x="2270" y="256" width="128" height="61">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="7" name="level1Ground" type="fixture" x="2463" y="352" width="129" height="61">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="9" name="level1Ground" type="fixture" x="2682.18" y="251.485" width="996.97" height="239.394">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="11" name="level1Ground" type="fixture" x="3615.15" y="190.909" width="196.97" height="66.6667">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="12" name="level1Ground" type="fixture" x="3812.12" y="136.364" width="193.939" height="148.485">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="14" name="level1Ground" type="fixture" x="4006.06" y="242.424" width="187.879" height="30.303">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="15" name="level1Ground" type="fixture" x="4163.64" y="278.788" width="187.879" height="39.3939">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="16" name="level1Ground" type="fixture" x="4381.82" y="445.455" width="378.788" height="30.303">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="17" name="level1Ground" type="fixture" x="4733.33" y="409.091" width="196.97" height="36.3636">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="18" name="level1Ground" type="fixture" x="4896.97" y="381.818" width="190.909" height="30.303">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="19" name="level1Ground" type="fixture" x="5081.82" y="278.788" width="196.97" height="36.3636">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="20" name="level1Ground" type="fixture" x="5345.45" y="227.273" width="124.242" height="254.545">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="21" name="level1Ground" type="fixture" x="5563.64" y="218.182" width="136.364" height="266.667">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="22" name="level1Ground" type="fixture" x="5787.88" y="227.273" width="133.333" height="242.424">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="24" name="level1Ground" type="fixture" x="6015.15" y="224.242" width="127.273" height="245.455">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="25" name="level1Ground" type="fixture" x="6248.48" y="224.242" width="118.182" height="257.576">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="26" name="combatZone" type="fixture" x="6366.62" y="226.05" width="7390.91" height="69.697" rotation="-0.121967">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="27" name="end" type="fixture" x="13754.5" y="218.182">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+   <polyline points="0,0 -6.06061,-642.424"/>
+  </object>
+ </objectgroup>
+</map>
