@@ -16,8 +16,6 @@ import com.game.HeroesNightfall.GameResourses;
  */
 public class AtlasAnimation {
 
-    public enum Direction {RIGHT,JUMP,STOP,FALLING};
-
     private TextureAtlas spriteSheet;
 
     private float positionX;
@@ -29,9 +27,7 @@ public class AtlasAnimation {
     private float elapsedTime;
     private float fps;
 
-
     private Body cos;
-    private float friction, density;
 
     /**
      * Creates an animation and a body for that animation in the map
